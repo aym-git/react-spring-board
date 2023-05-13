@@ -1,0 +1,64 @@
+// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot
+
+buildscript {
+    //사용할 플러그인, 라이브러리 버전 설정
+    ext {
+        springBootVersion = '2.7.4'
+        springDependencyVersion = '1.0.11.RELEASE'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+}
+plugins {
+    /*id 'org.springframe.boot' version "${springBootVersion}"*/
+    id 'io.spring.dependency-management' version "${springDependencyVersion}"
+    
+    //java 를 사용해도 무방하지만, JDK11 부터는 java-library 를 사용하는 것 추천
+    id 'java-library'
+}
+
+group = 'com.org.spring'
+version = '1.0-SNAPSHOT'
+
+//개발할 때 작성하는 자바소스코드 버전
+sourceCompatibility = JavaVersion.VERSION_11
+
+//소스 컴파일 시 생성된 class 파일 버전
+targetCompatibility = JavaVersion.VERSION_11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation("org.springframework.boot:spring-boot-gradle-plugin:2.7.4")
+    //boot
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+
+    //annotation
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+    //test
+    testImplementation("org.springframe.boot:spring-boot-starter-test")
+    testImplementation platform("org.junit:junit-bom:5.9.1")
+    testImplementation("org.junit.jupiter:junit-jupiter")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+/*bootJar {
+    enabled = true
+}*/
+
+jar {
+    enabled = false
+}
